@@ -21,6 +21,38 @@
                     <button type="button" id="cancel-button">Cancel</button>
                 </form>
             </dialog>
+
+            <dialog id="task-display-dialog">
+                <label class="task-info">Task Information:</label>
+                <form method="dialog">
+                    <div class="item">
+                        <label>Title:</label>
+                        <input type="text" id="task-name" required>
+                    </div>
+                    <div class="item">
+                        <label>Description:</label>
+                        <input type="text" id="description-task">
+                    </div>
+                    <div class="item">
+                        <label>Due Date:</label>
+                        <input type="date" id="due-date" required>
+                    </div>
+                    <div class="item">
+                        <label>Priority:</label>
+                        <select id="priority-select">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="item">
+                        <label>Notes:</label>
+                        <input type="text" id="any-notes">
+                    </div>
+                    <button type="submit" id="submit-button">Submit</button>
+                    <button type="button" id="cancel-button">Cancel</button>
+                </form>
+            </dialog>
         </div>
     </body>
 </html>
