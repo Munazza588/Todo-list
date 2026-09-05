@@ -45,10 +45,37 @@ function whenClickOnProjects() {
 function addNewTasks() {
     const taskInputDialog = document.querySelector('#task-display-dialog')
     const newTaskButton = document.querySelector('.add-a-task');
+
     newTaskButton.addEventListener('click', () => {
         taskInputDialog.showModal();
     })
 
+    const cancelButton = document.querySelector("#cancel-button-2");
+        cancelButton.addEventListener('click', () => {
+            taskInputDialog.close();
+            emptyAllInputBoxValues();
+
+
+        });
+
+    const submitButton = document.querySelector("#submit-button-2");
+        submitButton.addEventListener('click', () => {
+            taskInputDialog.close();
+            emptyAllInputBoxValues();
+                });
+
+}
+
+function emptyAllInputBoxValues() {
+     const allInputBoxes = document.querySelectorAll(".dialog-2-input");
+            allInputBoxes.forEach((box) => {
+                box.value = "";
+            });
+                
+}
+
+function displayTasks() {
+    
 }
 
 
