@@ -9,11 +9,14 @@
 
 .task-display {
     background-color: pink;
+    display: flex;
+    justify-content: space-between;
 }
 
 .title-dashboard {
     padding-left: 30px;
     font-size: 25px;
+   
 
 }
 
@@ -25,5 +28,21 @@
     margin-bottom: 10px;
     background-color: rgb(195, 195, 195);
     margin-top: 50px;
+     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 
+}
+.task-title {
+    padding-left: 25px;
+    font-size: 25px;
+}
+
+.add-a-task {
+   margin-right: 30px;
+   height:60px;
+   margin-top: 10px;
+   padding:10px 20px 10px 20px;
+   border-radius: 10px;
+   border: none;
+   background-color: rgb(226, 218, 218);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
