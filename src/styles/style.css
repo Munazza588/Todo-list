@@ -9,8 +9,11 @@
     border: 1px solid black;
 }
 
-.task-display {
+.outer-task-display-div {
     background-color: pink;
+}
+
+.task-display {
     display: flex;
     justify-content: space-between;
 }
@@ -69,4 +72,26 @@
 .task-info {
     font-weight: bold;
     font-size: 20px;
+}
+
+.task-info-block {
+    border: 1px solid white;
+    padding-left: 20px;
+    margin: 10px 0px 0px 10px;
+    display: flex;
+    justify-content: space-between;
+    width:500px
+}
+
+.detailsButton {
+    padding: 0px 30px;
+    background-color:  rgb(231, 84, 128);
+    border: 1px solid black;
+    
+
+}
+
+.all-task-container {
+   
+    
 }

@@ -1,3 +1,5 @@
+import {toDos,createTheTodoObjectsArray} from './logic.js';
+
 function whenClickTheNewProjectButton() {
     const projectButton = document.querySelector(".new-project-button");
     const dialogPopup = document.querySelector("#project-name-dialog")
@@ -61,6 +63,7 @@ function addNewTasks() {
     const submitButton = document.querySelector("#submit-button-2");
         submitButton.addEventListener('click', () => {
             taskInputDialog.close();
+            displayTasks();
             emptyAllInputBoxValues();
                 });
 
@@ -75,7 +78,54 @@ function emptyAllInputBoxValues() {
 }
 
 function displayTasks() {
-    
+    const titleInput = document.querySelector("#task-name");
+    const descriptionInput = document.querySelector("#description-task");
+    const dueDateInput = document.querySelector("#due-date");
+    const priorityInput = document.querySelector("#priority-select")
+    const notesInput = document.querySelector("#any-notes");
+
+
+    const newTodo = toDos(titleInput.value,descriptionInput.value,dueDateInput.value,priorityInput.value,notesInput.value);
+    const todoArray = createTheTodoObjectsArray(newTodo);
+
+
+    const divOuter = document.querySelector('.outer-task-display-div');
+    const containingAllOfTheseDivs = document.createElement('div');
+    containingAllOfTheseDivs.classList.add('all-task-container');
+
+    todoArray.forEach((todo) => {
+        const div = document.createElement('div');
+
+        div.classList.add("task-info-block")
+        const title = document.createElement('p');
+        const description = document.createElement('p');
+        const priority = document.createElement('p');
+        const notes = document.createElement('p');
+        const dueDate = document.createElement('p');
+
+        const detailsButton = document.createElement('button');
+        detailsButton.textContent = "Details";
+        detailsButton.classList.add('detailsButton');
+
+       title.textContent = todo.title;
+       description.textContent = todo.description;
+       priority.textContent = todo.priority;
+       notes.textContent = todo.notes;
+       dueDate .textContent= todo.dueDate;
+
+        div.appendChild(title);
+        div.append(detailsButton);
+        //div.appendChild(description);
+        //div.appendChild(priority);
+        //div.appendChild(notes);
+        //div.appendChild(dueDate);
+
+        containingAllOfTheseDivs.appendChild(div);
+
+    });
+    divOuter.appendChild(containingAllOfTheseDivs);
+
+
 }
 
 
