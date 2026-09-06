@@ -1,4 +1,4 @@
-import {toDos,createTheTodoObjectsArray} from './logic.js';
+import {toDos,createTheTodoObjectsArray,removeTodo} from './logic.js';
 
 function whenClickTheNewProjectButton() {
     const projectButton = document.querySelector(".new-project-button");
@@ -15,8 +15,9 @@ function whenClickTheNewProjectButton() {
 
         });
 
-    const submitButton = document.querySelector("#submit-button");
-        submitButton.addEventListener('click', () => {
+    const dialogPopup2 = document.querySelector('#project-name-dialog');
+    const taskForm = dialogPopup.querySelector('form');
+        taskForm.addEventListener('submit', () => {
             dialogPopup.close();
             displayTheNewProject(inputBox,projectButton);
             inputBox.value = "";
@@ -60,14 +61,16 @@ function addNewTasks() {
 
         });
 
-    const submitButton = document.querySelector("#submit-button-2");
-        submitButton.addEventListener('click', () => {
-            taskInputDialog.close();
-            displayTasks();
-            emptyAllInputBoxValues();
-                });
-
-}
+    const taskForm = taskInputDialog.querySelector('form');
+        taskForm.addEventListener('submit', () => {
+        const containingAllOfTheseDivs = document.querySelector('.all-task-container');
+        if (containingAllOfTheseDivs) {
+            containingAllOfTheseDivs.innerHTML = "";
+        }
+        displayTasks();
+        emptyAllInputBoxValues();
+        });
+        }
 
 function emptyAllInputBoxValues() {
      const allInputBoxes = document.querySelectorAll(".dialog-2-input");
@@ -76,6 +79,9 @@ function emptyAllInputBoxValues() {
             });
                 
 }
+
+const containingAllOfTheseDivs = document.createElement('div');
+containingAllOfTheseDivs.classList.add('all-task-container');
 
 function displayTasks() {
     const titleInput = document.querySelector("#task-name");
@@ -86,12 +92,10 @@ function displayTasks() {
 
 
     const newTodo = toDos(titleInput.value,descriptionInput.value,dueDateInput.value,priorityInput.value,notesInput.value);
-    const todoArray = createTheTodoObjectsArray(newTodo);
+    let todoArray = createTheTodoObjectsArray(newTodo);
 
 
     const divOuter = document.querySelector('.outer-task-display-div');
-    const containingAllOfTheseDivs = document.createElement('div');
-    containingAllOfTheseDivs.classList.add('all-task-container');
 
     todoArray.forEach((todo) => {
         const div = document.createElement('div');
@@ -107,6 +111,16 @@ function displayTasks() {
         detailsButton.textContent = "Details";
         detailsButton.classList.add('detailsButton');
 
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = "Delete";
+        deleteButton.classList.add('delete-task-button');
+        todoArray = deleteTheTask(deleteButton,todo.id,todoArray);
+
+        const taskButtonsDiv = document.createElement('div');
+        taskButtonsDiv.classList.add("div-task-buttons")
+        taskButtonsDiv.appendChild(deleteButton);
+        taskButtonsDiv.appendChild(detailsButton);
+
        title.textContent = todo.title;
        description.textContent = todo.description;
        priority.textContent = todo.priority;
@@ -114,7 +128,7 @@ function displayTasks() {
        dueDate .textContent= todo.dueDate;
 
         div.appendChild(title);
-        div.append(detailsButton);
+        div.appendChild(taskButtonsDiv);
         //div.appendChild(description);
         //div.appendChild(priority);
         //div.appendChild(notes);
@@ -125,6 +139,18 @@ function displayTasks() {
     });
     divOuter.appendChild(containingAllOfTheseDivs);
 
+
+}
+
+function deleteTheTask(deleteButton,idToDelete,todoArray) {
+    deleteButton.addEventListener('click', () => {
+        todoArray = removeTodo(idToDelete, todoArray);
+        deleteButton.closest('.task-info-block').remove();
+    });
+
+}
+
+function showDetails() {
 
 }
 

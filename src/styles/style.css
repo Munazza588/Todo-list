@@ -83,12 +83,19 @@
     width:500px
 }
 
-.detailsButton {
+.detailsButton,.delete-task-button {
     padding: 0px 30px;
     background-color:  rgb(231, 84, 128);
     border: 1px solid black;
-    
+    height:30px;
+    margin-right: 10px;
+}
 
+.div-task-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .all-task-container {
