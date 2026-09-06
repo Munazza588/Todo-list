@@ -40,8 +40,17 @@ function whenClickOnProjects() {
     allProjects.forEach((project) => {
         project.addEventListener('click', () => {
             taskTitle.textContent = project.textContent;
+            
+            
         });
     });
+}
+
+function clearTheTask() {
+    const containingAllOfTheseDivs = document.querySelector('.all-task-container');
+    if (containingAllOfTheseDivs) {
+        containingAllOfTheseDivs.innerHTML = "";
+    }
 }
 
 
@@ -110,6 +119,7 @@ function displayTasks() {
         const detailsButton = document.createElement('button');
         detailsButton.textContent = "Details";
         detailsButton.classList.add('detailsButton');
+        showDetails(detailsButton, description, priority, notes, dueDate);
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = "Delete";
@@ -142,16 +152,34 @@ function displayTasks() {
 
 }
 
-function deleteTheTask(deleteButton,idToDelete,todoArray) {
+function deleteTheTask(deleteButton, idToDelete, projectName) {
     deleteButton.addEventListener('click', () => {
-        todoArray = removeTodo(idToDelete, todoArray);
+        removeTodo(idToDelete, projectName);
         deleteButton.closest('.task-info-block').remove();
     });
-
 }
 
-function showDetails() {
 
+
+function showDetails(detailsButton,description,priority,notes,dueDate) {
+    const dialog = document.querySelector('#details-dialog');
+    dialog.innerHTML = "";
+    dialog.appendChild(description);
+    dialog.appendChild(priority);
+    dialog.appendChild(dueDate);
+    dialog.appendChild(notes);
+    const buttonClose = document.createElement("button");
+    buttonClose.classList.add("closing-button-details-dialog")
+    buttonClose.textContent = "close";
+
+    dialog.appendChild(buttonClose);
+    detailsButton.addEventListener('click', () => {
+        dialog.showModal();
+    });
+
+    buttonClose.addEventListener('click', () => {
+        dialog.close();
+    })
 }
 
 

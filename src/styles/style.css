@@ -24,7 +24,7 @@
 }
 
 .new-project-button {
-    margin-left: 90px;
+    margin-left: 20px;
     border:none;
     border-radius: 10px;
     padding: 15px 20px 15px 20px;
@@ -83,7 +83,7 @@
     width:500px
 }
 
-.detailsButton,.delete-task-button {
+.detailsButton,.delete-task-button,.closing-button-details-dialog {
     padding: 0px 30px;
     background-color:  rgb(231, 84, 128);
     border: 1px solid black;
