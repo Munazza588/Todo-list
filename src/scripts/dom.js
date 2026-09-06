@@ -1,4 +1,4 @@
-import {toDos,createTheTodoObjectsArray,removeTodo} from './logic.js';
+import {toDos,createTheTodoObjectsArray,removeTodo,getProjectObject} from './logic.js';
 
 function whenClickTheNewProjectButton() {
     const projectButton = document.querySelector(".new-project-button");
@@ -33,14 +33,16 @@ function displayTheNewProject(inputBox,projectButton) {
     projectDisplayDiv.insertBefore(newProjectNameDisplay,projectButton);
 }
 
-
 function whenClickOnProjects() {
     const allProjects = document.querySelectorAll(".new-project-name");
     const taskTitle = document.querySelector(".task-title");
     allProjects.forEach((project) => {
         project.addEventListener('click', () => {
             taskTitle.textContent = project.textContent;
-            
+            const divOuter = document.querySelector('.outer-task-display-div');
+            let projectObj = getProjectObject()
+            clearTheTask();
+            renderTasks(projectObj,divOuter,taskTitle.textContent);
             
         });
     });
@@ -72,10 +74,7 @@ function addNewTasks() {
 
     const taskForm = taskInputDialog.querySelector('form');
         taskForm.addEventListener('submit', () => {
-        const containingAllOfTheseDivs = document.querySelector('.all-task-container');
-        if (containingAllOfTheseDivs) {
-            containingAllOfTheseDivs.innerHTML = "";
-        }
+        clearTheTask();
         displayTasks();
         emptyAllInputBoxValues();
         });
@@ -91,6 +90,7 @@ function emptyAllInputBoxValues() {
 
 const containingAllOfTheseDivs = document.createElement('div');
 containingAllOfTheseDivs.classList.add('all-task-container');
+// so this basically contains all the divs inside the task section
 
 function displayTasks() {
     const titleInput = document.querySelector("#task-name");
@@ -100,13 +100,43 @@ function displayTasks() {
     const notesInput = document.querySelector("#any-notes");
 
 
+
+    // this creates the object for that one todo
     const newTodo = toDos(titleInput.value,descriptionInput.value,dueDateInput.value,priorityInput.value,notesInput.value);
-    let todoArray = createTheTodoObjectsArray(newTodo);
+
+    // this appends the todo into that one array that we have
+    // now we want it to append the object to the array to the project that it belongs to
+    // now he wants us to get the project in which we would push it 
+
+    // but the question is where do i get the project from 
+    // where does the project come in this 
+
+    // based on which they clicked we can actualy like
+    // use the project title thing and use that they for it 
+    // so it uses the key and stuff 
+
+
+
+    ///RIGHT NOW WHEN I CLICK SUBMIT ITS showing all the task in that project not from the start
+
+    const taskTitle = document.querySelector(".task-title").textContent;
+
+    let todoObject = createTheTodoObjectsArray(newTodo,taskTitle);
+    console.log(todoObject);
 
 
     const divOuter = document.querySelector('.outer-task-display-div');
+    renderTasks(todoObject,divOuter,taskTitle);
+    
 
-    todoArray.forEach((todo) => {
+
+}
+
+function renderTasks(todoObject,divOuter,taskTitle) {
+    if (!todoObject[taskTitle]) {
+        return; // or handle "no tasks yet" case, e.g. clear the container and stop
+    }
+    todoObject[taskTitle].forEach((todo) => {
         const div = document.createElement('div');
 
         div.classList.add("task-info-block")
@@ -124,7 +154,7 @@ function displayTasks() {
         const deleteButton = document.createElement('button');
         deleteButton.textContent = "Delete";
         deleteButton.classList.add('delete-task-button');
-        todoArray = deleteTheTask(deleteButton,todo.id,todoArray);
+        deleteTheTask(deleteButton, todo.id, taskTitle);
 
         const taskButtonsDiv = document.createElement('div');
         taskButtonsDiv.classList.add("div-task-buttons")
@@ -139,17 +169,11 @@ function displayTasks() {
 
         div.appendChild(title);
         div.appendChild(taskButtonsDiv);
-        //div.appendChild(description);
-        //div.appendChild(priority);
-        //div.appendChild(notes);
-        //div.appendChild(dueDate);
 
         containingAllOfTheseDivs.appendChild(div);
 
     });
     divOuter.appendChild(containingAllOfTheseDivs);
-
-
 }
 
 function deleteTheTask(deleteButton, idToDelete, projectName) {
