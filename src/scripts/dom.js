@@ -127,9 +127,6 @@ function displayTasks() {
 
     const divOuter = document.querySelector('.outer-task-display-div');
     renderTasks(todoObject,divOuter,taskTitle);
-    
-
-
 }
 
 function renderTasks(todoObject,divOuter,taskTitle) {
