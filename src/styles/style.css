@@ -31,7 +31,7 @@
     margin-bottom: 10px;
     background-color: rgb(195, 195, 195);
     margin-top: 50px;
-     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 
 }
 .task-title {
@@ -53,14 +53,8 @@
 .new-project-name{
     margin: 10px 10px 0px 30px;
     border: 1px solid white;
-    padding: 10px 0px 10px 20px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-#task-display-dialog{
-
-
-}
+    padding: 1px 0px 10px 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);}
 
 .item {
     display: flex;
@@ -98,7 +92,8 @@
     align-items: center;
 }
 
-.all-task-container {
-   
-    
+.delete-the-project-button {
+    border:none;
+    background-color: rgb(195, 195, 195);
+    padding:10px 20px;
 }

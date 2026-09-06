@@ -1,4 +1,4 @@
-import {toDos,createTheTodoObjectsArray,removeTodo,getProjectObject} from './logic.js';
+import {toDos,createTheTodoObjectsArray,removeTodo,getProjectObject,removeProject} from './logic.js';
 
 function whenClickTheNewProjectButton() {
     const projectButton = document.querySelector(".new-project-button");
@@ -28,13 +28,21 @@ function whenClickTheNewProjectButton() {
 function displayTheNewProject(inputBox,projectButton) {
     const newProjectNameDisplay = document.createElement("div");
     newProjectNameDisplay.classList.add("new-project-name");
-    newProjectNameDisplay.textContent = inputBox.value;
+    const projectNameInputValue = document.createElement('p');
+    projectNameInputValue.classList.add("project-name-para");
+    projectNameInputValue.textContent = inputBox.value;
+    const deleteProjectButton = document.createElement('button');
+    deleteProjectButton.classList.add("delete-the-project-button");
+    deleteProjectButton.textContent = "Delete"
+    newProjectNameDisplay.appendChild(projectNameInputValue)
+    newProjectNameDisplay.appendChild(deleteProjectButton)
     const projectDisplayDiv = document.querySelector(".dashboard");
     projectDisplayDiv.insertBefore(newProjectNameDisplay,projectButton);
+    whenClickingDeleteProjectButton();
 }
 
 function whenClickOnProjects() {
-    const allProjects = document.querySelectorAll(".new-project-name");
+    const allProjects = document.querySelectorAll(".project-name-para");
     const taskTitle = document.querySelector(".task-title");
     allProjects.forEach((project) => {
         project.addEventListener('click', () => {
@@ -90,7 +98,6 @@ function emptyAllInputBoxValues() {
 
 const containingAllOfTheseDivs = document.createElement('div');
 containingAllOfTheseDivs.classList.add('all-task-container');
-// so this basically contains all the divs inside the task section
 
 function displayTasks() {
     const titleInput = document.querySelector("#task-name");
@@ -99,31 +106,10 @@ function displayTasks() {
     const priorityInput = document.querySelector("#priority-select")
     const notesInput = document.querySelector("#any-notes");
 
-
-
-    // this creates the object for that one todo
     const newTodo = toDos(titleInput.value,descriptionInput.value,dueDateInput.value,priorityInput.value,notesInput.value);
-
-    // this appends the todo into that one array that we have
-    // now we want it to append the object to the array to the project that it belongs to
-    // now he wants us to get the project in which we would push it 
-
-    // but the question is where do i get the project from 
-    // where does the project come in this 
-
-    // based on which they clicked we can actualy like
-    // use the project title thing and use that they for it 
-    // so it uses the key and stuff 
-
-
-
-    ///RIGHT NOW WHEN I CLICK SUBMIT ITS showing all the task in that project not from the start
-
     const taskTitle = document.querySelector(".task-title").textContent;
 
     let todoObject = createTheTodoObjectsArray(newTodo,taskTitle);
-    console.log(todoObject);
-
 
     const divOuter = document.querySelector('.outer-task-display-div');
     renderTasks(todoObject,divOuter,taskTitle);
@@ -180,8 +166,6 @@ function deleteTheTask(deleteButton, idToDelete, projectName) {
     });
 }
 
-
-
 function showDetails(detailsButton,description,priority,notes,dueDate) {
     const dialog = document.querySelector('#details-dialog');
     dialog.innerHTML = "";
@@ -200,6 +184,24 @@ function showDetails(detailsButton,description,priority,notes,dueDate) {
 
     buttonClose.addEventListener('click', () => {
         dialog.close();
+    })
+}
+
+
+function whenClickingDeleteProjectButton() {
+    const deleteButtons = document.querySelectorAll(".delete-the-project-button");
+    deleteButtons.forEach((deleteButton) => {
+        deleteButton.addEventListener('click', () => {
+        const container = deleteButton.closest(".new-project-name");
+        const nameProject = deleteButton.previousElementSibling;
+        container.remove();
+        removeProject(nameProject.textContent);
+        clearTheTask();
+        let projectObj = getProjectObject();
+        const divOuter = document.querySelector('.outer-task-display-div');
+        document.querySelector(".task-title").textContent = "My default Project";
+        renderTasks(projectObj,divOuter,document.querySelector(".task-title").textContent);
+        })
     })
 }
 

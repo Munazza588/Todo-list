@@ -21,11 +21,17 @@ export function createTheTodoObjectsArray(newTodo, projectName) {
 }
 
 
-export function removeTodo(idToDelete) {
-    const index = todosArray.findIndex((todo) => todo.id === idToDelete);
-    todosArray.splice(index, 1);
+export function removeTodo(idToDelete, projectName) {
+    const todosInProject = projectObj[projectName];
+    const index = todosInProject.findIndex((todo) => todo.id === idToDelete);
+    todosInProject.splice(index, 1);
 }
 
 export function getProjectObject() {
     return projectObj;
+}
+
+
+export function removeProject(projectName) {
+    delete projectObj[projectName];
 }
