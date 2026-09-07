@@ -1,4 +1,4 @@
-import {toDos,createTheTodoObjectsArray,removeTodo,getProjectObject,removeProject} from './logic.js';
+import {toDos,createTheTodoObjectsArray,removeTodo,getProjectObject,removeProject,createProject} from './logic.js';
 
 function whenClickTheNewProjectButton() {
     const projectButton = document.querySelector(".new-project-button");
@@ -19,26 +19,30 @@ function whenClickTheNewProjectButton() {
     const taskForm = dialogPopup.querySelector('form');
         taskForm.addEventListener('submit', () => {
             dialogPopup.close();
-            displayTheNewProject(inputBox,projectButton);
+            displayTheNewProject(inputBox.value,projectButton);
+            createProject(inputBox.value);
             inputBox.value = "";
             whenClickOnProjects();
         });
 }
 
-function displayTheNewProject(inputBox,projectButton) {
+function displayTheNewProject(projectName,projectButton) {
     const newProjectNameDisplay = document.createElement("div");
     newProjectNameDisplay.classList.add("new-project-name");
     const projectNameInputValue = document.createElement('p');
     projectNameInputValue.classList.add("project-name-para");
-    projectNameInputValue.textContent = inputBox.value;
-    const deleteProjectButton = document.createElement('button');
-    deleteProjectButton.classList.add("delete-the-project-button");
-    deleteProjectButton.textContent = "Delete"
-    newProjectNameDisplay.appendChild(projectNameInputValue)
-    newProjectNameDisplay.appendChild(deleteProjectButton)
-    const projectDisplayDiv = document.querySelector(".dashboard");
-    projectDisplayDiv.insertBefore(newProjectNameDisplay,projectButton);
-    whenClickingDeleteProjectButton();
+    projectNameInputValue.textContent = projectName;
+    if(projectName != "My default Project") {
+        const deleteProjectButton = document.createElement('button');
+        deleteProjectButton.classList.add("delete-the-project-button");
+        deleteProjectButton.textContent = "Delete"
+        newProjectNameDisplay.appendChild(projectNameInputValue)
+        newProjectNameDisplay.appendChild(deleteProjectButton)
+        const projectDisplayDiv = document.querySelector(".dashboard");
+        projectDisplayDiv.insertBefore(newProjectNameDisplay,projectButton);
+        whenClickingDeleteProjectButton();
+    }
+    
 }
 
 function whenClickOnProjects() {
@@ -110,6 +114,7 @@ function displayTasks() {
     const taskTitle = document.querySelector(".task-title").textContent;
 
     let todoObject = createTheTodoObjectsArray(newTodo,taskTitle);
+
 
     const divOuter = document.querySelector('.outer-task-display-div');
     renderTasks(todoObject,divOuter,taskTitle);
@@ -206,5 +211,21 @@ function whenClickingDeleteProjectButton() {
 }
 
 
+function loadEverything() {
+    const projectButton = document.querySelector(".new-project-button");
+    const projectObj = getProjectObject();
+    const divOuter = document.querySelector('.outer-task-display-div');
+    const projectNames = Object.keys(projectObj);
+    const taskTitle = document.querySelector(".task-title").textContent;
+    projectNames.forEach((projectName) => {
+        displayTheNewProject(projectName, projectButton);
+        
+    });
+    whenClickOnProjects();
+    renderTasks(projectObj,divOuter,taskTitle)
+}
+
+
 whenClickTheNewProjectButton();
 addNewTasks();
+loadEverything();
