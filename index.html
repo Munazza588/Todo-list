@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    <script defer src="main.js"></script></head>
+    <body>
+        <div id="content">
+            <div class="dashboard">
+                <p class="title-dashboard">My Projects</p>
+                <div class="new-project-name">
+                    <p class="project-name-para">My default Project</p>
+                </div>
+                <button class="new-project-button">New Project</button>
+            </div>
+            <div class="outer-task-display-div">
+                <div class="task-display">
+                        <p class="task-title">My default Project</p>
+                    <button class="add-a-task">New Task</button>
+                </div>
+            </div>
+            
+            <dialog id="project-name-dialog">
+                <form method="dialog">
+                    <label>Project Title:</label>
+                    <input type="text" id="user-project-name-input" required>
+                    <button type="submit" id="submit-button">Submit</button>
+                    <button type="button" id="cancel-button">Cancel</button>
+                </form>
+            </dialog>
+
+            <dialog id="task-display-dialog">
+                <label class="task-info">Task Information:</label>
+                <form method="dialog">
+                    <div class="item">
+                        <label>Title:</label>
+                        <input type="text" id="task-name" class="dialog-2-input" required>
+                    </div>
+                    <div class="item">
+                        <label>Description:</label>
+                        <input type="text" id="description-task" class="dialog-2-input">
+                    </div>
+                    <div class="item">
+                        <label>Due Date:</label>
+                        <input type="date" id="due-date" class="dialog-2-input" required>
+                    </div>
+                    <div class="item">
+                        <label>Priority:</label>
+                        <select id="priority-select">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="item">
+                        <label>Notes:</label>
+                        <input type="text" id="any-notes" class="dialog-2-input">
+                    </div>
+                    <button type="submit" id="submit-button-2">Submit</button>
+                    <button type="button" id="cancel-button-2">Cancel</button>
+                </form>
+            </dialog>
+            <dialog id="details-dialog">
+                
+            </dialog>
+        </div>
+    </body>
+</html>
